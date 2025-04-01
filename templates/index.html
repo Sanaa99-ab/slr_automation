@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SLR Automation</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Automate Your SLR</h1>
+    <form method="POST" action="/">
+        <label for="topic">Enter Topic:</label><br>
+        <input type="text" id="topic" name="topic" placeholder="e.g., AI in healthcare" required><br><br>
+        <input type="submit" value="Generate SLR Components">
+    </form>
+    {{ results|safe }}
+</body>
+</html>
