@@ -1,0 +1,23 @@
+/* Results.css */
+.results-container {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .results-container h2 {
+    margin-bottom: 15px;
+    font-size: 1.8em;
+  }
+  
+  .result-item {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    white-space: pre-wrap;  /* Allow proper formatting for JSON output */
+  }
+  

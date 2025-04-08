@@ -3,3 +3,4 @@ uvicorn
 biopython
 requests
 python-dotenv
+openai
