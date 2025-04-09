@@ -1,0 +1,40 @@
+/* ScraperResultsTable.css */
+.scraper-results-table {
+    margin: 20px auto;
+    max-width: 1000px;
+    overflow-x: auto;
+  }
+  
+  .scraper-results-table table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .scraper-results-table th,
+  .scraper-results-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .scraper-results-table th {
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+  }
+  
+  .scraper-results-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .scraper-results-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .loading,
+  .placeholder {
+    text-align: center;
+    font-size: 1.2em;
+    padding: 20px;
+  }
+  

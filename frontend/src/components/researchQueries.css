@@ -1,0 +1,13 @@
+/* researchqueries.css */
+.research-queries {
+    text-align: left;
+  }
+  
+  .query-item {
+    padding: 10px;
+    background-color: #e9ecef;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  

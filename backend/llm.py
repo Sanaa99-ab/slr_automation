@@ -1,5 +1,6 @@
 # llm.py
 from openai import OpenAI
+from typing import Optional
 from config import config
 
 client = OpenAI(
@@ -29,7 +30,29 @@ def generate_research_questions(topic: str) -> list[str]:
             f"Fallback: How does {topic} influence Y?"
         ]
 
-def generate_search_queries(questions: list[str]) -> list[str]:
+# def generate_search_queries(topic: str, questions: list[str]) -> list[str]:
+#     try:
+#         prompt = "Convert the following research questions into Boolean search queries suitable for academic databases:\n" + "\n".join(questions)
+#         response = client.chat.completions.create(
+#             messages=[
+#                 {"role": "system", "content": "You are an expert in crafting search queries for Systematic Literature Reviews."},
+#                 {"role": "user", "content": f"{prompt}. Format each query as a single line, using AND/OR/NOT operators, separated by newlines."}
+#             ],
+#             model=config.OPENAI_MODEL,
+#             temperature=0.5,  # More structured output
+#             max_tokens=150,
+#             top_p=1
+#         )
+#         queries_text = response.choices[0].message.content.strip()
+#         queries = [q.strip() for q in queries_text.split("\n") if q.strip()]
+#         return queries[:3] if len(queries) >= 3 else queries + [f"Fallback: {questions[0].split()[2:4]} AND impact"] * (3 - len(queries))
+#     except Exception as e:
+#         return [
+#             f"Error: Could not generate queries ({str(e)})",
+#             f"Fallback: {topic} AND research",
+#             f"Fallback: {topic} AND outcomes"
+        # ]
+def generate_search_queries(topic: Optional[str], questions: list[str]) -> list[str]:
     try:
         prompt = "Convert the following research questions into Boolean search queries suitable for academic databases:\n" + "\n".join(questions)
         response = client.chat.completions.create(
@@ -38,18 +61,23 @@ def generate_search_queries(questions: list[str]) -> list[str]:
                 {"role": "user", "content": f"{prompt}. Format each query as a single line, using AND/OR/NOT operators, separated by newlines."}
             ],
             model=config.OPENAI_MODEL,
-            temperature=0.5,  # More structured output
+            temperature=0.5,
             max_tokens=150,
             top_p=1
         )
         queries_text = response.choices[0].message.content.strip()
         queries = [q.strip() for q in queries_text.split("\n") if q.strip()]
-        return queries[:3] if len(queries) >= 3 else queries + [f"Fallback: {questions[0].split()[2:4]} AND impact"] * (3 - len(queries))
+        if len(queries) >= 3:
+            return queries[:3]
+        else:
+            # Use topic if available; otherwise use a default fallback
+            fallback = f"Fallback: {(topic or 'research')} AND impact"
+            return queries + [fallback] * (3 - len(queries))
     except Exception as e:
         return [
             f"Error: Could not generate queries ({str(e)})",
-            f"Fallback: {topic} AND research",
-            f"Fallback: {topic} AND outcomes"
+            f"Fallback: {(topic or 'research')} AND outcomes",
+            f"Fallback: {(topic or 'research')} AND impact"
         ]
 
 def propose_criteria(topic: str) -> list[str]:
